@@ -19,4 +19,4 @@ npm run dev
 
 ## Интерфейс
 
-Тема Aplo подключена в корневом layout. Пакет `@aplocoin/ui` устанавливается из архива в `vendor/`, чтобы сборка работала сразу после клонирования. Чтобы обновить его, соберите новую версию через `npm pack -w @aplocoin/ui` в репозитории дизайн-системы и обновите архив, зависимости и lockfile. Примеры доступны в [каталоге Aplo](https://aplo.interfuse.agency/) и [документации UI SDK](https://ui-sdk.dev/docs/react).
+Тема Aplo подключена в корневом layout. Пакет `@aplocoin/ui` устанавливается из архива в `vendor/`, чтобы сборка работала сразу после клонирования. Для обновления выполните `npm run build -w @aplocoin/ui` и `npm pack -w @aplocoin/ui` в репозитории дизайн-системы, затем обновите архив, зависимости и lockfile. Примеры доступны в [каталоге Aplo](https://aplo.interfuse.agency/) и [документации UI SDK](https://ui-sdk.dev/docs/react).
