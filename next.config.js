@@ -1,4 +1,3 @@
-const createNextIntlPlugin = require("next-intl/plugin");
 const basePath = process.env.PAGES_BASE_PATH || "";
 
 /** @type {import("next").NextConfig} */
@@ -11,4 +10,4 @@ const nextConfig = {
   turbopack: { root: __dirname },
 };
 
-module.exports = createNextIntlPlugin("./src/i18n.ts")(nextConfig);
+module.exports = nextConfig;

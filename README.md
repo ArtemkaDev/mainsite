@@ -1,6 +1,6 @@
 # AploCoin mainsite
 
-Статический сайт AploCoin на Next.js. Рабочий репозиторий — [ArtemkaDev/mainsite](https://github.com/ArtemkaDev/mainsite).
+Основа нового статического сайта AploCoin на Next.js. Точка входа — `src/app/page.tsx`. Рабочий репозиторий — [ArtemkaDev/mainsite](https://github.com/ArtemkaDev/mainsite).
 
 ## Локальный запуск
 
