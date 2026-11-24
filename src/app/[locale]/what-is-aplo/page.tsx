@@ -1,28 +1,10 @@
 "use client";
-import {useEffect, useState} from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import dynamic from "next/dynamic";
 
-const DesktopPage = dynamic(() => import('./desktop/Desktop'), { ssr: false });
-const MobilePage = dynamic(() => import('./mobile/Mobile'), { ssr: false });
+const DesktopPage = dynamic(() => import('./desktop/Desktop'));
+const MobilePage = dynamic(() => import('./mobile/Mobile'));
 
 export default function Home() {
-    const [isMobile, setMobile] = useState(false);
-
-    const handleResize = () => {
-        window.innerWidth > 1000 ? setMobile(false) : setMobile(true);
-    };
-
-    useEffect(() => {
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    return (
-        <>
-            {isMobile ? <MobilePage/> : <DesktopPage/>}
-        </>
-    );
+    return useIsMobile() ? <MobilePage /> : <DesktopPage />;
 }

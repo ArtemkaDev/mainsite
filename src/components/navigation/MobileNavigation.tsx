@@ -1,19 +1,21 @@
-import { useState, useRef, useEffect } from "react";
-import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { publicAsset } from "@/lib/public-asset";
+import { useState } from "react";
+import { Button } from "@ui-sdk/react/button";
+import {
+  Drawer,
+  DrawerBackdrop,
+  DrawerClose,
+  DrawerContent,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@ui-sdk/react/drawer";
+import { X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
-import { Murecho } from "next/font/google";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import LanguageSwitcher from "../language/LanguageSwitcher";
-import { clsx } from "clsx";
-import { Button } from "@/components/ui/button";
 import { ThemeSwitcher } from "../theme/ThemeSwitcher";
+import { useToast } from "@/hooks/use-toast";
 
 declare global {
   interface Window {
@@ -34,26 +36,13 @@ const APLO_NETWORK = {
     "https://explorer.aplocoin.com"
   ]
 };
-import { useToast } from "@/hooks/use-toast";
-
-const murecho = Murecho({ subsets: ["latin", "cyrillic"] });
-
 export default function MobileNavigation() {
   const t = useTranslations("Menu");
   const [open, setOpen] = useState(false);
-  const [mainComponentHeight, setMainComponentHeight] = useState(0);
-  const mainComponentRef = useRef<null | HTMLDivElement>(null);
 
-  const pathname = usePathname();
-  const lang = pathname.substring(1, 3);
+  const lang = useLocale();
 
   const closeMenu = () => setOpen(false);
-
-  useEffect(() => {
-    if (mainComponentRef.current) {
-      setMainComponentHeight(mainComponentRef.current.offsetHeight);
-    }
-  }, []);
 
   const { toast } = useToast();
 
@@ -199,100 +188,85 @@ export default function MobileNavigation() {
   ];
 
   return (
-    <>
-      <div
-        style={{ height: `${mainComponentHeight}px`, marginBottom: "1.35vh" }}
-      ></div>
-      <div
-        ref={mainComponentRef}
-        className="flex flex-column bg-secondary justify-between items-center px-[3.73vw] z-10 w-full fixed top-0"
-      >
-        <Link href={`/${lang}`} onClick={closeMenu}>
+    <header className="sticky top-0 z-10 mb-[1.35vh] flex w-full items-center justify-between bg-secondary px-[3.73vw]">
+      <Link href={`/${lang}`}>
+        <Image
+          src={publicAsset("/menu/logo.png")}
+          width={6}
+          height={3}
+          alt="AploCoin logo"
+          className="w-[12.8vw] h-auto p-1"
+        />
+      </Link>
+      <Drawer side="right" open={open} onOpenChange={setOpen}>
+        <DrawerTrigger aria-label={t("openMenu")} className="px-2">
           <Image
-            src="/menu/logo.png"
-            width={6}
-            height={3}
-            alt="AploCoin logo"
-            className="w-[12.8vw] h-auto p-1"
+            src={publicAsset("/menu/menu-m.svg")}
+            width={24}
+            height={16}
+            alt=""
+            className="w-[7vw]"
           />
-        </Link>
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <button>
-              <Image
-                src="/menu/menu-m.svg"
-                width={24}
-                height={16}
-                alt="Icon open menu"
-                className="w-[7vw]"
-              />
-            </button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[280px] sm:w-[360px]">
-            <SheetHeader className="space-y-6 h-full">
-              <div className="flex flex-col justify-between items-center h-full">
-                <nav className="flex flex-col space-y-4">
-                  <div className="flex flex-row items-center justify-between">
-                    <LanguageSwitcher />
-                    <ThemeSwitcher />
-                  </div>
-                  <Link
-                    href={`/${lang}/donate-aplo-project`}
-                    onClick={closeMenu}
-                  >
-                    <Button className="w-full">{t("donate")}</Button>
-                  </Link>
-                  {menuItems.map((item) => (
-                    <Link
-                      key={item.title}
-                      href={item.url}
-                      className={clsx(murecho.className, "font-medium")}
-                      onClick={closeMenu}
-                    >
-                      <Button variant="outline" className="w-full">
-                        {item.title}
-                      </Button>
-                    </Link>
-                  ))}
-                </nav>
-                <div className="flex flex-col space-y-4 w-full">
-                  <Button
-                    variant="outline"
-                    onClick={addAploNetwork}
-                    className={clsx(murecho.className, "font-medium w-full")}
-                  >
-                    {t("addNetwork")}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      addToken(
-                        "0x0000000000000000000000000000000000001235",
-                        "APLO"
-                      );
-                    }}
-                    className={clsx(murecho.className, "font-medium w-full")}
-                  >
-                    {t("addAploToken")}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      addToken(
-                        "0x0000000000000000000000000000000000001234",
-                        "GAPLO"
-                      );
-                    }}
-                    className={clsx(murecho.className, "font-medium w-full")}
-                  >
-                    {t("addGaploToken")}
-                  </Button>
-                </div>
-              </div>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </>
+        </DrawerTrigger>
+        <DrawerBackdrop />
+        <DrawerContent className="!w-[min(100%,360px)] overflow-y-auto">
+          <DrawerTitle className="sr-only">{t("openMenu")}</DrawerTitle>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher onChange={closeMenu} />
+            <ThemeSwitcher />
+            <DrawerClose data-variant="outline" aria-label={t("closeMenu")} className="ml-auto w-10 justify-center">
+              <X className="h-5 w-5" aria-hidden="true" />
+            </DrawerClose>
+          </div>
+          <nav className="grid gap-3">
+            <Button
+              data-variant="solid"
+              render={<Link href={`/${lang}/donate-aplo-project`} onClick={closeMenu} />}
+            >
+              {t("donate")}
+            </Button>
+            {menuItems.map((item) => (
+              <Button
+                key={item.url}
+                data-variant="outline"
+                render={<Link href={item.url} onClick={closeMenu} />}
+              >
+                {item.title}
+              </Button>
+            ))}
+          </nav>
+          <div className="grid gap-3">
+            <Button
+              data-variant="outline"
+              onClick={addAploNetwork}
+            >
+              {t("addNetwork")}
+            </Button>
+            <Button
+              data-variant="outline"
+              onClick={() => {
+                addToken(
+                  "0x0000000000000000000000000000000000001235",
+                  "APLO"
+                );
+              }}
+            >
+              {t("addAploToken")}
+            </Button>
+            <Button
+              data-variant="outline"
+              onClick={() => {
+                addToken(
+                  "0x0000000000000000000000000000000000001234",
+                  "GAPLO"
+                );
+              }}
+            >
+              {t("addGaploToken")}
+            </Button>
+          </div>
+        </DrawerContent>
+      </Drawer>
+    </header>
   );
 }

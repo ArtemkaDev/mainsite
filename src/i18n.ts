@@ -1,14 +1,13 @@
-import {notFound} from 'next/navigation';
-import {getRequestConfig} from 'next-intl/server';
- 
-// Can be imported from a shared config
-const locales = ['en', 'ru', 'ua'];
- 
-export default getRequestConfig(async ({locale}) => {
-  // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as any)) notFound();
- 
-  return {
-    messages: (await import(`../messages/${locale}.json`)).default
-  };
+import { getRequestConfig } from "next-intl/server";
+import { defaultLocale, isLocale, type Locale } from "@/lib/locales";
+
+export async function getMessages(locale: Locale) {
+  return (await import(`../messages/${locale}.json`)).default;
+}
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale;
+  const locale = isLocale(requested) ? requested : defaultLocale;
+
+  return { locale, messages: await getMessages(locale), timeZone: "UTC" };
 });

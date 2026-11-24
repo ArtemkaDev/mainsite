@@ -1,77 +1,45 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, usePathname, useParams } from "next/navigation";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { Menu, MenuContent, MenuRadioGroup, MenuRadioItem, MenuTrigger } from "@ui-sdk/react/menu";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "next/navigation";
 import { ChevronDownIcon } from "lucide-react";
 import Image from "next/image";
+import { isLocale, locales } from "@/lib/locales";
+import { publicAsset } from "@/lib/public-asset";
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ onChange }: { onChange?: () => void }) {
+  const t = useTranslations("Menu");
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
+  const activeLocale = useLocale();
+  const selected = locales.find(({ code }) => code === activeLocale) ?? locales[0];
 
-  const locales = [
-    { code: "en", label: "English", flag: "/flags/gb.svg" },
-    { code: "ua", label: "Українська", flag: "/flags/ua.svg" },
-    { code: "ru", label: "Русский", flag: "/flags/ru.svg" },
-  ];
+  function changeLocale(locale: string) {
+    if (!isLocale(locale) || locale === selected.code) return;
 
-  const [selectedLocale, setSelectedLocale] = useState(params.locale || locales[0].code);
-
-  const handleLanguageChange = (locale: string) => {
-    if (locale !== selectedLocale) {
-      setSelectedLocale(locale);
-      const updatedPathname = `/${locale}${pathname.substring(3)}`;
-      router.push(updatedPathname);
-    }
-  };
-
-  const selectedFlag = locales.find(locale => locale.code === selectedLocale)?.flag;
-
+    const path = pathname.slice(selected.code.length + 1);
+    router.push(`/${locale}${path || "/"}${window.location.search}${window.location.hash}`);
+    onChange?.();
+  }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="!m-0">
-        <Button variant="outline" className="flex items-center gap-2">
-          <Image 
-            src={selectedFlag || "/flags/gb.svg"}
-            alt={`${selectedLocale} flag`}
-            width={20}
-            height={20}
-            className="rounded-sm object-cover"
-            unoptimized
-          />
-          <span>
-            {typeof selectedLocale === "string" 
-              ? selectedLocale.toUpperCase() 
-              : selectedLocale[0].toUpperCase()}
-          </span>
-          <ChevronDownIcon className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-40">
-        <DropdownMenuGroup>
-          {locales.map((locale) => (
-            <DropdownMenuItem
-              key={locale.code}
-              onClick={() => handleLanguageChange(locale.code)}
-              className="flex items-center gap-2"
-            >
-              <Image 
-                src={locale.flag}
-                alt={`${locale.code} flag`}
-                width={20}
-                height={20}
-                className="rounded-sm object-cover"
-                unoptimized
-              />
-              {locale.label}
-            </DropdownMenuItem>
+    <Menu>
+      <MenuTrigger data-variant="outline" aria-label={t("language")} className="px-3">
+        <Image src={publicAsset(selected.flag)} width={20} height={15} alt="" />
+        <span lang={selected.languageTag}>{selected.code.toUpperCase()}</span>
+        <ChevronDownIcon className="h-4 w-4" aria-hidden="true" />
+      </MenuTrigger>
+      <MenuContent align="end" sideOffset={6}>
+        <MenuRadioGroup value={selected.code} onValueChange={changeLocale}>
+          {locales.map(({ code, flag, label, languageTag }) => (
+            <MenuRadioItem key={code} value={code} label={label} lang={languageTag} closeOnSelect>
+              <Image src={publicAsset(flag)} width={20} height={15} alt="" />
+              {label}
+            </MenuRadioItem>
           ))}
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </MenuRadioGroup>
+      </MenuContent>
+    </Menu>
   );
 }

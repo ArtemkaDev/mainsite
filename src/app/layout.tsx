@@ -1,21 +1,27 @@
-import { ReactNode } from "react";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { ThemeProvider } from "next-themes";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
+import { publicAsset } from "@/lib/public-asset";
 
+import "@aplocoin/ui/sdk.css";
+import "@fontsource-variable/murecho";
+import "@fontsource-variable/open-sans";
+import "./globals.css";
 
-type Props = {
-  children: ReactNode;
-  params: { locale: string };
+export const metadata: Metadata = {
+  title: "AploCoin",
+  icons: { icon: publicAsset("/favicon.ico") },
 };
 
-export default function RootLayout({ children, params }: Props) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang={params.locale}>
+    <html lang="en" suppressHydrationWarning>
       <body>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        {children}
-        <Toaster />
-      </ThemeProvider>
+        <ThemeProvider attribute={["class", "data-aplo-theme"]} defaultTheme="system">
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

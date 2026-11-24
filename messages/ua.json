@@ -1,5 +1,12 @@
 {
   "Menu": {
+    "language": "Мова",
+    "theme": "Колірна тема",
+    "light": "Світла",
+    "dark": "Темна",
+    "system": "Системна",
+    "openMenu": "Відкрити меню",
+    "closeMenu": "Закрити меню",
     "whatIsAplo": "Що таке Aplo",
     "mining": "Майнінг",
     "faq": "FAQ",

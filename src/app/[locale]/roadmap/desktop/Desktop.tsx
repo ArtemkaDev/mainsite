@@ -1,13 +1,11 @@
 "use client";
+import { publicAsset } from "@/lib/public-asset";
 
 import { useTranslations } from "next-intl";
 import styles from "./desktop.module.css";
-import { Murecho } from 'next/font/google';
 import Link from "next/link";
 import { useRef, useState, MutableRefObject } from "react";
 
-
-const murecho = Murecho({ subsets: ['latin', 'cyrillic'] });
 
 export default function Desktop() {
     const t = useTranslations("Roadmap");
@@ -27,11 +25,11 @@ export default function Desktop() {
 
     return (
         <>
-            <p className={`${styles["page-heading"]} ${murecho.className}`}>{t('title')}</p>
+            <p className={`${styles["page-heading"]} font-murecho`}>{t('title')}</p>
             <div className={styles["roadmap-remarks"]}>
-                <p className={`${styles["roadmap-remark"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src="/roadmap/completed.png" />{t('completed')}</span></p>
-                <p className={`${styles["roadmap-remark"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src="/roadmap/ongoing.png" />{t('onGoing')}</span></p>
-                <p className={`${styles["roadmap-remark"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src="/roadmap/upcoming.png" />{t('upComing')}</span></p>
+                <p className={`${styles["roadmap-remark"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/completed.png")} />{t('completed')}</span></p>
+                <p className={`${styles["roadmap-remark"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/ongoing.png")} />{t('onGoing')}</span></p>
+                <p className={`${styles["roadmap-remark"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/upcoming.png")} />{t('upComing')}</span></p>
             </div>
             <section className={styles["menu-container"]}>
                 <ul className={styles["roadmap-buttons"]}>
@@ -41,47 +39,47 @@ export default function Desktop() {
                             ref={(el) => { liRefs.current[index] = el }}
                             onClick={() => handleClick(index)}
                             className={`${styles["roadmap-category"]} ${activatedIndex === index ? styles["activated"] : ''}`}>
-                            <p className={`${styles["category-year"]} ${murecho.className}`}>{year === 'Future' ? t('future') : year}</p>
+                            <p className={`${styles["category-year"]} font-murecho`}>{year === 'Future' ? t('future') : year}</p>
                         </li>
                     ))}
                 </ul>
             </section>
             {activatedYear &&
                 <section className={styles["main-container"]}>
-                    <p className={`${styles["year-heading"]} ${murecho.className}`}>{activatedYear}</p>
+                    <p className={`${styles["year-heading"]} font-murecho`}>{activatedYear}</p>
                     {activatedYear === "2019" &&
                         <div className={styles["task-container"]}>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/completed.png"} /> {t('completed')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/ongoing.png"} /> {t('onGoing')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/upcoming.png"} /> {t('upComing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/completed.png")} /> {t('completed')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/ongoing.png")} /> {t('onGoing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/upcoming.png")} /> {t('upComing')}</span></p>
                         </div>
                     }{activatedYear === "2020" &&
                         <div className={styles["task-container"]}>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/completed.png"} /> {t('completed')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/ongoing.png"} /> {t('onGoing')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/upcoming.png"} /> {t('upComing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/completed.png")} /> {t('completed')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/ongoing.png")} /> {t('onGoing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/upcoming.png")} /> {t('upComing')}</span></p>
                         </div>
                     }{activatedYear === "2021" &&
                         <div className={styles["task-container"]}>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/completed.png"} /> {t('completed')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/ongoing.png"} /> {t('onGoing')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/upcoming.png"} /> {t('upComing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/completed.png")} /> {t('completed')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/ongoing.png")} /> {t('onGoing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/upcoming.png")} /> {t('upComing')}</span></p>
                         </div>
                     }{activatedYear === "2022" &&
                         <div className={styles["task-container"]}>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/completed.png"} /> {t('completed')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/ongoing.png"} /> {t('onGoing')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/upcoming.png"} /> {t('upComing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/completed.png")} /> {t('completed')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/ongoing.png")} /> {t('onGoing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/upcoming.png")} /> {t('upComing')}</span></p>
                         </div>
                     }{activatedYear === "2023" &&
                         <div className={styles["task-container"]}>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/completed.png"} /> {t('completed')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/ongoing.png"} /> {t('onGoing')}</span></p>
-                            <p className={`${styles["roadmap-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/upcoming.png"} /> {t('upComing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/completed.png")} /> {t('completed')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/ongoing.png")} /> {t('onGoing')}</span></p>
+                            <p className={`${styles["roadmap-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/upcoming.png")} /> {t('upComing')}</span></p>
                         </div>
                     }{activatedYear === "Future" &&
                         <div className={styles["task-container"]}>
-                            <p className={`${styles["roadmap-task"]} ${styles["link-task"]} ${murecho.className}`}><span className={styles["remark-span"]}><img className={styles["remark-icon"]} src={"/roadmap/upcoming.png"} /><Link className={styles["remark-link"]} href={""}>Upcoming Task Link</Link> <img className={styles["remark-link-icon"]} src={"/roadmap/link-icon.png"} /></span></p>
+                            <p className={`${styles["roadmap-task"]} ${styles["link-task"]} font-murecho`}><span className={styles["remark-span"]}><img alt="" className={styles["remark-icon"]} src={publicAsset("/roadmap/upcoming.png")} /><Link className={styles["remark-link"]} href={""}>Upcoming Task Link</Link> <img alt="" className={styles["remark-link-icon"]} src={publicAsset("/roadmap/link-icon.png")} /></span></p>
                         </div>
                     }
                 </section>

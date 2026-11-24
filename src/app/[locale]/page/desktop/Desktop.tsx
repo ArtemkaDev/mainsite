@@ -1,7 +1,6 @@
-import { Murecho } from "next/font/google";
+import { publicAsset } from "@/lib/public-asset";
 import styles from "./desktop.module.css";
-import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { Charts } from "@/components/crypto/charts";
 import Info from "@/components/crypto/info";
@@ -11,27 +10,24 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
-const murecho = Murecho({ subsets: ["latin", "cyrillic"] });
-
 export default function Desktop() {
   const t = useTranslations("Index");
-  const pathname = usePathname();
-  const lang = pathname.substring(1, 3);
+  const lang = useLocale();
 
   return (
     <>
       <main className={styles["main-container"]}>
         <div className={styles["left-side"]}>
-          <img
-            src="/main/main-image.png"
+          <img alt=""
+            src={publicAsset("/main/main-image.png")}
             className={styles["left-side-image"]}
           />
         </div>
         <div className={styles["right-side"]}>
-          <p className={`${styles["right-side-heading"]} ${murecho.className}`}>
+          <p className={`${styles["right-side-heading"]} font-murecho`}>
             {t("aploMeansMoney")}
           </p>
-          <p className={`${styles["right-side-text"]} ${murecho.className}`}>
+          <p className={`${styles["right-side-text"]} font-murecho`}>
             {t("privateDecentralized")}
           </p>
           <div className={styles["right-side-buttons"]}>
@@ -40,14 +36,14 @@ export default function Desktop() {
               className={styles["right-side-button-link"]}
             >
               <button
-                className={`${styles["right-side-button1"]} ${murecho.className}`}
+                className={`${styles["right-side-button1"]} font-murecho`}
               >
                 {t("aboutAplo")}
               </button>
             </Link>
             <Link href="https://t.me/aplocoin_community">
               <button
-                className={`${styles["right-side-button2"]} ${murecho.className}`}
+                className={`${styles["right-side-button2"]} font-murecho`}
               >
                 {t("joinCommunity")}
               </button>
@@ -60,34 +56,34 @@ export default function Desktop() {
           className={`${styles["advantages-info"]} ${styles["left-advantages-info"]}`}
         >
           <p
-            className={`${styles["advantages-info-heading"]} ${murecho.className}`}
+            className={`${styles["advantages-info-heading"]} font-murecho`}
           >
             {t("chooseWallet")}
           </p>
           <p
-            className={`${styles["advantages-info-text"]} ${murecho.className}`}
+            className={`${styles["advantages-info-text"]} font-murecho`}
           >
             {t("walletDescription")}
           </p>
         </div>
-        <img
-          src="/main/advantage-image-1.png"
+        <img alt=""
+          src={publicAsset("/main/advantage-image-1.png")}
           className={`${styles["advantage-image"]} ${styles["advantage-image1"]} ${styles["right-advantages-image"]}`}
         ></img>
-        <img
-          src="/main/advantage-image-2.png"
+        <img alt=""
+          src={publicAsset("/main/advantage-image-2.png")}
           className={`${styles["advantage-image"]} ${styles["left-advantages-image"]}`}
         ></img>
         <div
           className={`${styles["advantages-info"]} ${styles["right-advantages-info"]}`}
         >
           <p
-            className={`${styles["advantages-info-heading"]} ${murecho.className}`}
+            className={`${styles["advantages-info-heading"]} font-murecho`}
           >
             {t("getCoins")}
           </p>
           <p
-            className={`${styles["advantages-info-text"]} ${murecho.className}`}
+            className={`${styles["advantages-info-text"]} font-murecho`}
           >
             {t("getCoinsDescription")}
           </p>
@@ -96,34 +92,34 @@ export default function Desktop() {
           className={`${styles["advantages-info"]} ${styles["left-advantages-info"]}`}
         >
           <p
-            className={`${styles["advantages-info-heading"]} ${murecho.className}`}
+            className={`${styles["advantages-info-heading"]} font-murecho`}
           >
             {t("useCurrency")}
           </p>
           <p
-            className={`${styles["advantages-info-text"]} ${murecho.className}`}
+            className={`${styles["advantages-info-text"]} font-murecho`}
           >
             {t("useCurrencyDescription")}
           </p>
         </div>
-        <img
-          src="/main/advantage-image-3.png"
+        <img alt=""
+          src={publicAsset("/main/advantage-image-3.png")}
           className={`${styles["advantage-image"]} ${styles["right-advantages-image"]}`}
         ></img>
-        <img
-          src="/main/advantage-image-4.png"
+        <img alt=""
+          src={publicAsset("/main/advantage-image-4.png")}
           className={`${styles["advantage-image4"]} ${styles["left-advantages-image"]}`}
         ></img>
         <div
           className={`${styles["advantages-info"]} ${styles["right-advantages-info"]}`}
         >
           <p
-            className={`${styles["advantages-info-heading"]} ${murecho.className}`}
+            className={`${styles["advantages-info-heading"]} font-murecho`}
           >
             {t("findAnswers")}
           </p>
           <p
-            className={`${styles["advantages-info-text"]} ${murecho.className}`}
+            className={`${styles["advantages-info-text"]} font-murecho`}
           >
             {t("faqDescription")}
           </p>
@@ -158,7 +154,7 @@ export default function Desktop() {
           </a>
         </div>
       </section>
-      <p className={`${styles["community-title"]} ${murecho.className}`}>
+      <p className={`${styles["community-title"]} font-murecho`}>
         {t("joinCommunity")}
       </p>
       <section className={styles["community-section"]}>
@@ -166,12 +162,12 @@ export default function Desktop() {
           className={`${styles["community-advantage-info"]} ${styles["community-advantage-info-left"]}`}
         >
           <p
-            className={`${styles["community-advantage-info-heading"]} ${murecho.className}`}
+            className={`${styles["community-advantage-info-heading"]} font-murecho`}
           >
             {t("contribute")}
           </p>
           <p
-            className={`${styles["community-advantage-info-text"]} ${murecho.className}`}
+            className={`${styles["community-advantage-info-text"]} font-murecho`}
           >
             {t("contributeDescription")}
           </p>
@@ -179,12 +175,12 @@ export default function Desktop() {
             {t("contributing")}
           </Link>
         </div>
-        <img
-          src="/main/community-image-1.png"
+        <img alt=""
+          src={publicAsset("/main/community-image-1.png")}
           className={`${styles["community-image1"]} ${styles["community-image-right"]}`}
         />
-        <img
-          src="/main/community-image-2.png"
+        <img alt=""
+          src={publicAsset("/main/community-image-2.png")}
           className={`${styles["community-image2"]} ${styles["community-image-left"]}`}
         />
         <div className={styles["community-advantages"]}>
@@ -192,12 +188,12 @@ export default function Desktop() {
             className={`${styles["community-advantage-info"]} ${styles["community-advantage-info-right"]}`}
           >
             <p
-              className={`${styles["community-advantage-info-heading"]} ${murecho.className}`}
+              className={`${styles["community-advantage-info-heading"]} font-murecho`}
             >
               {t("researchLab")}
             </p>
             <p
-              className={`${styles["community-advantage-info-text"]} ${murecho.className}`}
+              className={`${styles["community-advantage-info-text"]} font-murecho`}
             >
               {t("researchLabDescription")}
             </p>
@@ -208,12 +204,12 @@ export default function Desktop() {
             className={`${styles["community-advantage-info"]} ${styles["community-advantage-info-left"]}`}
           >
             <p
-              className={`${styles["community-advantage-info-heading"]} ${murecho.className}`}
+              className={`${styles["community-advantage-info-heading"]} font-murecho`}
             >
               {t("meetCommunity")}
             </p>
             <p
-              className={`${styles["community-advantage-info-text"]} ${murecho.className}`}
+              className={`${styles["community-advantage-info-text"]} font-murecho`}
             >
               {t("meetCommunityDescription")}
             </p>
@@ -222,8 +218,8 @@ export default function Desktop() {
             </button>
           </div>
         </div>
-        <img
-          src="/main/community-image-3.png"
+        <img alt=""
+          src={publicAsset("/main/community-image-3.png")}
           className={`${styles["community-image3"]} ${styles["community-image-right"]}`}
         />
       </section>

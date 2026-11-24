@@ -1,45 +1,41 @@
 import {useTranslations} from "next-intl";
 import styles from "./desktop.module.css";
-import {Murecho} from 'next/font/google';
-import Link from "next/link";
-
-const murecho = Murecho({subsets: ['latin', 'cyrillic']});
 
 export default function Desktop() {
     const t = useTranslations('AboutAplo');
 
     return (
         <>
-            <p className={`${styles["page-heading"]} ${murecho.className}`}>{t('pageHeading')}</p>
+            <p className={`${styles["page-heading"]} font-murecho`}>{t('pageHeading')}</p>
             <section className={styles["section-container"]}>
-                <p className={`${styles["about-heading"]} ${murecho.className}`}>{t('historyHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('historyText1')}</p>
+                <p className={`${styles["about-heading"]} font-murecho`}>{t('historyHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('historyText1')}</p>
             </section>
             <section className={styles["section-container"]}>
-                <p className={`${styles["about-heading"]} ${murecho.className}`}>{t('valuesHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('valuesIntro')}</p>
-                <p className={`${styles["about-paragraph-heading"]} ${murecho.className}`}>{t('simplicityHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('simplicityText')}</p>
-                <p className={`${styles["about-paragraph-heading"]} ${murecho.className}`}>{t('securityHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('securityText')}</p>
-                <p className={`${styles["about-paragraph-heading"]} ${murecho.className}`}>{t('privacyHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('privacyText')}</p>
-                <p className={`${styles["about-paragraph-heading"]} ${murecho.className}`}>{t('decentralizationHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('decentralizationText')}</p>
+                <p className={`${styles["about-heading"]} font-murecho`}>{t('valuesHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('valuesIntro')}</p>
+                <p className={`${styles["about-paragraph-heading"]} font-murecho`}>{t('simplicityHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('simplicityText')}</p>
+                <p className={`${styles["about-paragraph-heading"]} font-murecho`}>{t('securityHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('securityText')}</p>
+                <p className={`${styles["about-paragraph-heading"]} font-murecho`}>{t('privacyHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('privacyText')}</p>
+                <p className={`${styles["about-paragraph-heading"]} font-murecho`}>{t('decentralizationHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('decentralizationText')}</p>
             </section>
             <section className={styles["section-container"]}>
-                <p className={`${styles["about-heading"]} ${murecho.className}`}>{t('technicalInfoHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('technicalInfoText')} <Link href={""}><span className={styles["about-link"]}>{t('library')}</span></Link></p>
-                <p className={`${styles["about-paragraph-heading"]} ${murecho.className}`}>{t('powHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('powText')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('powText1')}<br />{t('powText2')}</p>
+                <p className={`${styles["about-heading"]} font-murecho`}>{t('technicalInfoHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('technicalInfoText')}</p>
+                <p className={`${styles["about-paragraph-heading"]} font-murecho`}>{t('powHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('powText')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('powText1')}<br />{t('powText2')}</p>
 
-                <p className={`${styles["about-paragraph-heading"]} ${murecho.className}`}>{t('emissionCurveHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('emissionCurveText')} <Link href={""}><span className={styles["about-link"]}>{t('tailEmission')}</span></Link></p>
-                <p className={`${styles["about-paragraph-heading"]} ${murecho.className}`}>{t('blocksHeading')}</p>
-                <p className={`${styles["about-text"]} ${murecho.className}`}>{t('blocksText')} <Link href={""}><span className={styles["about-link"]}>{t('block')}</span></Link> <Link href={""}><span className={styles["about-link"]}>{t('scalability')}</span></Link></p>
-                <p className={`${styles["about-paragraph-heading"]} ${murecho.className}`}>{t('privacyTechnologiesHeading')}</p>
-                <p className={`${styles["about-techno-list"]} ${murecho.className}`}>{t('privacyTechnologiesList')}</p>
+                <p className={`${styles["about-paragraph-heading"]} font-murecho`}>{t('emissionCurveHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('emissionCurveText')}</p>
+                <p className={`${styles["about-paragraph-heading"]} font-murecho`}>{t('blocksHeading')}</p>
+                <p className={`${styles["about-text"]} font-murecho`}>{t('blocksText')}</p>
+                <p className={`${styles["about-paragraph-heading"]} font-murecho`}>{t('privacyTechnologiesHeading')}</p>
+                <p className={`${styles["about-techno-list"]} font-murecho`}>{t('privacyTechnologiesList')}</p>
             </section>
         </>
     )

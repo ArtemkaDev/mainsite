@@ -1,28 +1,10 @@
 "use client";
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
+import { useIsMobile } from "@/hooks/use-mobile";
 
-const MobileNavigation = dynamic(() => import('./MobileNavigation'), { ssr: false });
-const DesktopNavigation = dynamic(() => import('./DesktopNavigation'), { ssr: false });
+const MobileNavigation = dynamic(() => import('./MobileNavigation'));
+const DesktopNavigation = dynamic(() => import('./DesktopNavigation'));
 
 export default function Navigation() {
-    const [isMobile, setIsMobile] = useState(false);
-
-    const handleResize = () => {
-        setIsMobile(window.innerWidth <= 1000);
-    };
-
-    useEffect(() => {
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    return (
-        <>
-            {isMobile ? <MobileNavigation /> : <DesktopNavigation />}
-        </>
-    );
+    return useIsMobile() ? <MobileNavigation /> : <DesktopNavigation />;
 }

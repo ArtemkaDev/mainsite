@@ -1,46 +1,36 @@
-import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
-import { ReactNode } from "react";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import "./globals.css";
 import Navigation from "@/components/navigation/component";
 import CustomFooter from "@/components/footer/Footer";
+import { DocumentLanguage } from "@/components/language/DocumentLanguage";
+import { getMessages } from "@/i18n";
+import { isLocale, locales } from "@/lib/locales";
 
+export const dynamicParams = false;
 
-export const metadata: Metadata = {
-  title: "AploCoin",
-  description: "",
-};
-
-type Props = {
-  children: ReactNode;
-  params: { locale: string };
-};
-
-async function getMessages(locale: string) {
-  try {
-    return (await import(`../../../messages/${locale}.json`)).default;
-  } catch (error) {
-    notFound();
-  }
-}
-
-export async function generateStaticParams() {
-  return ["en", "ru", "ua"].map((locale) => ({ locale }));
+export function generateStaticParams() {
+  return locales.map(({ code }) => ({ locale: code }));
 }
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
-}: Readonly<{
-  children: React.ReactNode;
-  params: { locale: string };
-}>) {
-  unstable_setRequestLocale(locale);
+  params,
+}: {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+
+  setRequestLocale(locale);
   const messages = await getMessages(locale);
+  const languageTag = locales.find(({ code }) => code === locale)!.languageTag;
+
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
+      <DocumentLanguage languageTag={languageTag} />
       <Navigation />
       {children}
       <CustomFooter />

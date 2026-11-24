@@ -1,35 +1,51 @@
-name: Node.js CI
+name: Deploy Next.js to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
 
 jobs:
   build:
-
+    if: github.repository == 'ArtemkaDev/mainsite'
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      pages: read
     steps:
-      # https://github.com/actions/checkout
-      - uses: actions/checkout@v3
-        
-      # a standard step for GitHub actions on Node
-      # https://github.com/actions/setup-node
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v6
         with:
-          # update the Node version to meet your needs
-          node-version: 18
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
           cache: npm
-
-      - name: Build
-        run: |
-          npm ci
-          npm run build
-          touch out/.nojekyll
-
-      - name: Deploy
-        # https://github.com/JamesIves/github-pages-deploy-action
-        uses: JamesIves/github-pages-deploy-action@v4
+      - uses: actions/configure-pages@v5
+        id: pages
+      - run: npm ci
+      - run: npm run build
+        env:
+          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - uses: actions/upload-pages-artifact@v4
         with:
-          branch: gh-pages
-          folder: out
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v5
+        id: deployment

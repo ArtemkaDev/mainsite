@@ -1,6 +1,6 @@
+import { publicAsset } from "@/lib/public-asset";
 import LanguageSwitcher from "../language/LanguageSwitcher";
-import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -41,8 +41,7 @@ const APLO_NETWORK = {
 
 export default function DesktopNavigation() {
   const t = useTranslations("Menu");
-  const pathname = usePathname();
-  const lang = pathname.substring(1, 3);
+  const lang = useLocale();
   const { toast } = useToast();
 
   const addAploNetwork = async () => {
@@ -189,7 +188,7 @@ export default function DesktopNavigation() {
         <div className="flex flex-row items-center">
           <Link href={`/${lang}`}>
             <Image
-              src="/menu/logo.png"
+              src={publicAsset("/menu/logo.png")}
               width={64}
               height={64}
               alt="AploCoin logo"
@@ -205,7 +204,7 @@ export default function DesktopNavigation() {
                     <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
-                          <a
+                          <Link
                             className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md bg-background  hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                             href={`/${lang}/mining-aplo`}
                           >
@@ -216,7 +215,7 @@ export default function DesktopNavigation() {
                             <p className="text-sm leading-tight ">
                               {t("start-mining")}
                             </p>
-                          </a>
+                          </Link>
                         </NavigationMenuLink>
                       </li>
 
@@ -297,7 +296,7 @@ export default function DesktopNavigation() {
                     >
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
-                          <a
+                          <Link
                             className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md bg-background  hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                             href={`/${lang}/what-is-aplo`}
                           >
@@ -306,81 +305,76 @@ export default function DesktopNavigation() {
                               {t("whatIsAplo")}
                             </div>
                             <p className="text-sm leading-tight ">TEST</p>
-                          </a>
+                          </Link>
                         </NavigationMenuLink>
                       </li>
                       <NavigationMenuLink asChild>
-                        <Link href={`/${lang}/faq`} passHref>
-                          <Button
-                            variant="outline"
+                        <Button asChild variant="outline"
                             className={cn(
                               "h-auto w-full block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground text-left"
                             )}
                           >
-                            <div className="text-sm font-medium leading-none">
+                            <Link href={`/${lang}/faq`}>
+                              <div className="text-sm font-medium leading-none">
                               {t("faq")}
                             </div>
                             <p className="text-sm font-normal leading-tight ">
                               TEST
                             </p>
-                          </Button>
-                        </Link>
+                          </Link>
+                        </Button>
                       </NavigationMenuLink>
 
                       <NavigationMenuLink asChild>
-                        <Link href={`/${lang}/about-aplo`} passHref>
-                          <Button
-                            variant="outline"
+                        <Button asChild variant="outline"
                             className={cn(
                               "h-auto w-full block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground text-left"
                             )}
                           >
-                            <div className="text-sm font-medium leading-none">
+                            <Link href={`/${lang}/about-aplo`}>
+                              <div className="text-sm font-medium leading-none">
                               {t("about")}
                             </div>
                             <p className="text-sm font-normal leading-tight ">
                               TEST
                             </p>
-                          </Button>
-                        </Link>
+                          </Link>
+                        </Button>
                       </NavigationMenuLink>
 
                       <NavigationMenuLink asChild>
-                        <Link href={`/${lang}/user-guides`} passHref>
-                          <Button
-                            variant="outline"
+                        <Button asChild variant="outline"
                             className={cn(
                               "h-auto w-full block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground text-left"
                             )}
                           >
-                            <div className="text-sm font-medium leading-none">
+                            <Link href={`/${lang}/user-guides`}>
+                              <div className="text-sm font-medium leading-none">
                               {t("userGuides")}
                             </div>
                             <p className="text-sm font-normal leading-tight ">
                               TEST
                             </p>
-                          </Button>
-                        </Link>
+                          </Link>
+                        </Button>
                       </NavigationMenuLink>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href={`/${lang}/roadmap`} legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
+                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <Link href={`/${lang}/roadmap`}>
                       {t("roadmap")}
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           </div>
         </div>
         <div className="flex flex-row items-center gap-4">
-          <Button className="mr-[1.385vw]">
+          <Button asChild className="mr-[1.385vw]">
             <Link href={`/${lang}/donate-aplo-project`}>{t("donate")}</Link>
           </Button>
           <LanguageSwitcher />

@@ -1,5 +1,12 @@
 {
   "Menu": {
+    "language": "Language",
+    "theme": "Color theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "whatIsAplo": "What is APLO",
     "mining": "Mining",
     "faq": "FAQ",

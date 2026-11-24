@@ -1,59 +1,24 @@
 "use client";
-import { useState, useEffect } from "react";
+import { publicAsset } from "@/lib/public-asset";
 import Image from "next/image";
-import { Murecho, Open_Sans } from "next/font/google";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
-const murecho = Murecho({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-murecho",
-});
-
-const open_sans = Open_Sans({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-open-sans",
-});
+import { useIsMobile } from "@/hooks/use-mobile";
+import desktopStyles from "./desktop.module.css";
+import mobileStyles from "./mobile.module.css";
 
 const CustomFooter = () => {
   const t = useTranslations('Footer');
-  const pathname = usePathname();
-  const lang = pathname.substring(1, 3);
-  const [isMobile, setIsMobile] = useState(false);
-  const [styles, setStyles] = useState<any>({});
-
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 1000);
-  };
-
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    const loadStyles = async () => {
-      if (isMobile) {
-        const style_mobile = await import('./mobile.module.css');
-        setStyles(style_mobile);
-      } else {
-        const style_pc = await import('./desktop.module.css');
-        setStyles(style_pc);
-      }
-    };
-    loadStyles();
-  }, [isMobile]);
+  const lang = useLocale();
+  const styles = useIsMobile() ? mobileStyles : desktopStyles;
 
   return (
-    <footer className={`${styles.footer} ${murecho.variable} ${open_sans.variable}`}>
+    <footer className={styles.footer}>
       <div className={styles["main-container"]}>
         <div className="flex flex-row items-center">
           <Image
-            src="/menu/logo.png"
+            src={publicAsset("/menu/logo.png")}
             width={6}
             height={3}
             alt="AploCoin logo"
@@ -91,18 +56,14 @@ const CustomFooter = () => {
         </div>
       </div>
       <div className={styles['url-container']}>
-        {/* <Link href="https://github.com/AploCoin/mainsite" target="_blank" className={styles['source-code-link']}>
-          {t('sourceCode')}
-          <Image src="/menu/url.svg" width={9} height={8} alt="Url icon for navigation"/>
-        </Link> */}
         <Link href="https://t.me/+agd5PnUnNWAyYjEy">
-          <Image src="/menu/telegram.svg" alt="Telegram icon" width={15} height={15} className={styles["icon-img"]}/>
+          <Image src={publicAsset("/menu/telegram.svg")} alt="Telegram icon" width={15} height={15} className={styles["icon-img"]}/>
         </Link>
         <Link href="https://discord.gg/CfsneqdYBF">
-          <Image src="/menu/discord.svg" alt="Discord icon" width={15} height={15} className={styles["icon-img"]}/>
+          <Image src={publicAsset("/menu/discord.svg")} alt="Discord icon" width={15} height={15} className={styles["icon-img"]}/>
         </Link>
         <Link href="https://github.com/AploCoin/">
-          <Image src="/menu/github.svg" alt="Github icon" width={15} height={15} className={styles["icon-img"]}/>
+          <Image src={publicAsset("/menu/github.svg")} alt="Github icon" width={15} height={15} className={styles["icon-img"]}/>
         </Link>
       </div>
     </footer>
